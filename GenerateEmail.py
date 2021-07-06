@@ -1,6 +1,5 @@
 import requests
 import os
-import shutil
 
 def GetData(**kwargs):
     url = "https://www.1secmail.com/api/v1/"
@@ -31,18 +30,20 @@ def DownloadData(**kwargs):
 
     local_filename = url.split('=')[-1]
     local_filename = os.path.join(dir, local_filename)
-    
+
+    # File sering tidak terdownload
     with requests.get(url, stream=True) as r:
+        r.raise_for_status()
         with open(local_filename, 'wb') as f:
-            shutil.copyfileobj(r.raw, f)
+            for chunk in r.iter_content(chunk_size=None):
+                f.write(chunk)
 
 def ClearScreen():
+    # Terminal tidak terclear seluruhnya
     _ = os.system("clear")
 
 if __name__ == "__main__":
-    #UserEmail = GetData(action="genRandomMailbox")[0]
-
-    UserEmail = "adsrmdkng@wwjmp.com"
+    UserEmail = GetData(action="genRandomMailbox")[0]
 
     UserName, Domain = tuple(UserEmail.split('@'))
 
@@ -73,7 +74,7 @@ if __name__ == "__main__":
                     FetchedMail = GetData(action="readMessage", login=UserName, domain=Domain, id=MailID)
 
                     for key, value in FetchedMail.items():
-                        if type(value) is list:
+                        if type(value) is list: # Attachments hanya tercantum satu meskipun dikirim banyak dan file masih sering corrupt
                             print("\t", str(key), " : ")
                             for attachment in value:
                                 for anotherKey, anotherValue in attachment.items():
