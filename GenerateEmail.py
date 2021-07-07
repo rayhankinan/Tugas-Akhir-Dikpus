@@ -72,8 +72,10 @@ if __name__ == "__main__":
                     MailID = input("Masukkan id email yang ingin di fetch : ")
                     FetchedMail = GetData(action="readMessage", login=UserName, domain=Domain, id=MailID)
 
+                    # BUG : Kalau heavy traffic kadang attachments tidak terlihat semua dan file download corrupted
+
                     for key, value in FetchedMail.items():
-                        if type(value) is list: # BUG : Kalau heavy traffic kadang attachments tidak terlihat semua dan file download corrupted
+                        if type(value) is list:
                             print("\t", str(key), " : ")
                             for attachment in value:
                                 for anotherKey, anotherValue in attachment.items():
