@@ -32,8 +32,7 @@ def DownloadData(**kwargs):
 
     local_filename = url.split('=')[-1]
     local_filename = os.path.join(dir, local_filename)
-
-    # File sering tidak terdownload
+    
     with requests.get(url, stream=True) as r:
         r.raise_for_status()
         with open(local_filename, 'wb') as f:
@@ -41,7 +40,7 @@ def DownloadData(**kwargs):
                 f.write(chunk)
 
 def ClearScreen():
-    # Terminal tidak terclear seluruhnya
+    # BUG : Terminal tidak terclear seluruhnya
     _ = os.system("clear")
 
 if __name__ == "__main__":
@@ -76,7 +75,7 @@ if __name__ == "__main__":
                     FetchedMail = GetData(action="readMessage", login=UserName, domain=Domain, id=MailID)
 
                     for key, value in FetchedMail.items():
-                        if type(value) is list: # Attachments hanya tercantum satu meskipun dikirim banyak dan file masih sering corrupt
+                        if type(value) is list: # BUG : Kalau koneksi jelek kadang attachments tidak terlihat semua dan file download corrupted
                             print("\t", str(key), " : ")
                             for attachment in value:
                                 for anotherKey, anotherValue in attachment.items():
