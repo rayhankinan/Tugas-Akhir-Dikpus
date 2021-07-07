@@ -1,3 +1,5 @@
+# IMPORTANT NOTES : PROGRAM HANYA BERJALAN PADA IOS
+
 import requests
 import os
 
