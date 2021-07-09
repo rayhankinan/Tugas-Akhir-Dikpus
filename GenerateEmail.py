@@ -112,7 +112,7 @@ if __name__ == "__main__":
                             else:
                                 continue
 
-                        if anotherCommand == 'Y' or anotherCommand == 'y':
+                        if anotherCommand == 'N' or anotherCommand == 'n':
                             continue
 
                     break
